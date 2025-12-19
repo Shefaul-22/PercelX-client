@@ -5,6 +5,8 @@ import Covarage from "../pages/Covarage/Covarage";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/AuthRelated/Login/Login";
 import Register from "../pages/AuthRelated/Register/Register";
+import PrivateRoute from "./PrivateRoute";
+import Rider from "../pages/Rider/Rider";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +17,11 @@ export const router = createBrowserRouter([
         {
             index: true, 
             Component: Homepage,
+        },
+
+        {
+          path: "rider",
+          element: <PrivateRoute><Rider></Rider></PrivateRoute>
         },
 
         {
@@ -35,6 +42,7 @@ export const router = createBrowserRouter([
         Component: Login
 
       },
+
 
       {
         path: "register",

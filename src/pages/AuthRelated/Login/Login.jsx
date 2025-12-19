@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import useAuth from '../../../hooks/useAuth';
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
@@ -14,6 +14,9 @@ const Login = () => {
 
     const { signInUser } = useAuth();
 
+    const location = useLocation();
+    console.log('in the login', location)
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const handleLogin = (data) => {
@@ -22,7 +25,7 @@ const Login = () => {
         signInUser(data.email, data.password)
             .then(result => {
                 console.log(result.user);
-                navigate("/");
+                navigate(location?.state || '/');
             })
             .catch(error => {
                 console.log(error);
@@ -92,7 +95,10 @@ const Login = () => {
             </form>
 
             <div className='w-full md:w-2/3 my-2'>
-                <p>New to PercelX? <Link to="/register" className='text-blue-500 text-[18px] underline mb-2'>Register</Link></p>
+                <p>New to PercelX? <Link state={location.state}
+                
+                to="/register" 
+                className='text-blue-500 text-[18px] underline mb-2'>Register</Link></p>
                 <p className='text-center text-xl'>Or</p>
             </div>
 
