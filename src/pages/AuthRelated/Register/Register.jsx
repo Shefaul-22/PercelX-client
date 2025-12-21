@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import FormData from "form-data";
 import axios from 'axios';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Register = () => {
 
@@ -15,17 +16,18 @@ const Register = () => {
     const { registerUser, UpdateUserProfile } = useAuth();
 
     const location = useLocation();
-    console.log("in register page", location);
+    // console.log("in register page", location);
 
     const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
 
     const { register, handleSubmit, formState: { errors }
     } = useForm();
 
     const handleRegister = (data) => {
 
-        console.log("after register", data);
-        console.log("after register", data, data.photo[0]);
+        // console.log("after register", data);
+        // console.log("after register", data, data.photo[0]);
         const profileImg = data.photo[0];
 
         registerUser(data.email, data.password)
@@ -39,17 +41,36 @@ const Register = () => {
 
                 axios.post(image_API_URL, formData)
                     .then(res => {
-                        console.log('after image upload', res);
-                        console.log('after image upload', res.data.data.url);
+
+                        const photoURL = res.data.data.url;
+                        console.log(photoURL);
+
+                        // create user in the database
+                        const userInfo = {
+                            email: data.email,
+                            displayName: data.name,
+                            photoURL: photoURL
+                        }
+                        axiosSecure.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user created in the database',res.data);
+                                }
+                            })
+
+
+                        // console.log('after image upload', res);
+                        // console.log('after image upload', res.data.data.url);
                         // update the user profile
                         const userProfile = {
                             displayName: data.name,
-                            photoURL: res.data.data.url,
+                            photoURL: photoURL,
                         }
 
                         UpdateUserProfile(userProfile)
                             .then(() => {
                                 console.log('userProfile updated done');
+                                navigate(location.state || '/');
                             })
                             .catch(error => {
                                 console.log(error)
@@ -57,7 +78,7 @@ const Register = () => {
                     })
 
 
-                navigate("/login");
+                
             })
             .catch(error => {
                 console.log(error);

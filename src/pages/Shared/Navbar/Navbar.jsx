@@ -13,6 +13,15 @@ const Navbar = () => {
         <li><NavLink to="/send-parcel">Send A Parcel</NavLink></li>
         <li><NavLink to="/coverage">Coverage</NavLink></li>
 
+        {
+            user && <>
+                <li><NavLink to="/dashboard/my-parcels">My Parcels</NavLink></li>
+                <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+            </>
+        }
+        <li><NavLink to="">About Us</NavLink></li>
+
+
 
     </>
 
@@ -43,11 +52,11 @@ const Navbar = () => {
                     </ul>
                 </div>
 
-                <Link to="/">
+                <span>
                     <div className="btn btn-ghost text-xl">
                         <Logo></Logo>
                     </div>
-                </Link>
+                </span>
 
             </div>
             <div className="navbar-center hidden lg:flex">

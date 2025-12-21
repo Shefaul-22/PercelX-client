@@ -15,7 +15,7 @@ const Login = () => {
     const { signInUser } = useAuth();
 
     const location = useLocation();
-    console.log('in the login', location)
+    // console.log('in the login', location)
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
