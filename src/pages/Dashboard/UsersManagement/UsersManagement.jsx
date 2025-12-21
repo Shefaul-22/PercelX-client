@@ -1,9 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
+
 import { FaUserShield } from 'react-icons/fa';
 import { FiShieldOff } from 'react-icons/fi';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+
+
 
 const UsersManagement = () => {
     const axiosSecure = useAxiosSecure();

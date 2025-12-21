@@ -16,7 +16,7 @@ const Register = () => {
     const { registerUser, UpdateUserProfile } = useAuth();
 
     const location = useLocation();
-    // console.log("in register page", location);
+    console.log("in register page", location);
 
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
@@ -54,7 +54,7 @@ const Register = () => {
                         axiosSecure.post('/users', userInfo)
                             .then(res => {
                                 if (res.data.insertedId) {
-                                    console.log('user created in the database',res.data);
+                                    console.log('user created in the database', res.data);
                                 }
                             })
 
@@ -70,7 +70,7 @@ const Register = () => {
                         UpdateUserProfile(userProfile)
                             .then(() => {
                                 console.log('userProfile updated done');
-                                navigate(location.state || '/');
+                                navigate("/login");
                             })
                             .catch(error => {
                                 console.log(error)
@@ -78,7 +78,7 @@ const Register = () => {
                     })
 
 
-                
+
             })
             .catch(error => {
                 console.log(error);
@@ -162,7 +162,7 @@ const Register = () => {
                         errors.password?.type === 'pattern' && <p className='text-red-500'>Password must include uppercase, lowercase, number & special character</p>
                     }
 
-                    <button className="btn bg-primary font-semibold mt-4 w-full md:w-2/3">Register</button>
+                    <button className="btn bg-primary font-semibold mt-4 w-full md:w-2/3" >Register</button>
                 </fieldset>
 
             </form>
@@ -170,11 +170,11 @@ const Register = () => {
 
 
             <div className='w-full md:w-2/3 my-2'>
-                <p>Already have an Account. <Link 
+                <p>Already have an Account. <Link
 
-                state={location.state}
-                
-                to="/login" className='text-blue-500 text-[18px] underline mb-2'>Login</Link></p>
+                    state={location.state}
+
+                    to="/login" className='text-blue-500 text-[18px] underline mb-2'>Login</Link></p>
                 <p className='text-center text-xl'>Or</p>
             </div>
 

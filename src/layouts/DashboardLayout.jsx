@@ -56,6 +56,8 @@ const DashboardLayout = () => {
                                 <span className="is-drawer-close:hidden">Payment History</span>
                             </NavLink>
                         </li>
+
+                        {/* Rider only links */}
                         {
                             role === 'rider' && <>
                                 <li>
